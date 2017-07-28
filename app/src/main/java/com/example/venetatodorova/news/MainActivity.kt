@@ -18,9 +18,15 @@ class MainActivity : AppCompatActivity() {
 
         articles = ArrayList<Article>()
 
+        val adapter = ListViewAdapter(this, articles)
+
         APILayer.requestNews { result ->
-            articles = result
+            articles.clear()
+            articles.addAll(result)
+            adapter.notifyDataSetChanged()
         }
+
+        listView.adapter = adapter
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
