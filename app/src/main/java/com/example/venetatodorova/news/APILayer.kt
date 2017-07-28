@@ -1,10 +1,10 @@
 package com.example.venetatodorova.news
 
-import android.content.res.Resources
 import android.net.Uri
-import com.github.kittinunf.fuel.core.FuelError
+import com.beust.klaxon.JsonArray
+import com.beust.klaxon.JsonObject
+import com.beust.klaxon.Parser
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.Result
 import java.net.URL
 
 object APILayer {
@@ -19,18 +19,29 @@ object APILayer {
                 .appendPath("v1")
                 .appendPath("articles")
                 .appendQueryParameter("source", source)
-                .appendQueryParameter("apiKey",apiKey)
+                .appendQueryParameter("apiKey", apiKey)
         url = URL(uriBuilder.build().toString())
         return url
     }
 
-    fun requestNews(resultHandler: (Result<String, FuelError>) -> (Unit)) {
+    fun requestNews(resultHandler: (ArrayList<Article>) -> (Unit)) {
         buildURL("techcrunch")
                 .toString()
                 .httpGet()
                 .responseString { request, response, result ->
-                    resultHandler(result)
+                    resultHandler(parse(result.get()))
                 }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun parse(jsonString: String): ArrayList<Article> {
+        val jsonObject = Parser().parse(StringBuilder(jsonString)) as JsonObject
+        val articles = jsonObject["articles"] as JsonArray<JsonObject>
+        val result = ArrayList<Article>()
+        articles.forEach { element ->
+            result.add(Article(element))
+        }
+        return result
     }
 
 }
