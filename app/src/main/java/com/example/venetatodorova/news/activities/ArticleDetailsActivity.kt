@@ -1,5 +1,6 @@
 package com.example.venetatodorova.news.activities
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_article_details.*
 import org.jetbrains.anko.indeterminateProgressDialog
 
 class ArticleDetailsActivity : AppCompatActivity() {
+
+    var progressDialog : ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,20 +39,29 @@ class ArticleDetailsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        dismissProgressDialog()
+    }
+
+    private fun dismissProgressDialog() {
+        if ((progressDialog as ProgressDialog).isShowing) {
+            progressDialog?.dismiss()
+        }
+    }
+
     private fun setupWebView(article: Article) {
         webView.setOnTouchListener { v, _ ->
             v.parent.requestDisallowInterceptTouchEvent(true)
             false
         }
 
-        val progressDialog = indeterminateProgressDialog(resources.getString(R.string.loading_page_message))
+        progressDialog = indeterminateProgressDialog(resources.getString(R.string.loading_page_message))
 
         webView.loadUrl(article.url)
         webView.setWebViewClient(object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
-                if (progressDialog.isShowing) {
-                    progressDialog.dismiss()
-                }
+                dismissProgressDialog()
             }
         })
     }
