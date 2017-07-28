@@ -1,11 +1,18 @@
-package com.example.venetatodorova.news
+package com.example.venetatodorova.news.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.venetatodorova.news.R
+import com.example.venetatodorova.news.adapters.ListViewAdapter
+import com.example.venetatodorova.news.models.Article
+import com.example.venetatodorova.news.services.APILayer
+import com.example.venetatodorova.news.utils.DesignManager
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         adapter = ListViewAdapter(this, articles)
         listView.adapter = adapter
+        listView.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(this, ArticleDetailsActivity::class.java)
+            intent.putExtra(resources.getString(R.string.intent_message), adapter.getItem(position))
+            startActivity(intent)
+        }
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Not implemented", Snackbar.LENGTH_LONG)

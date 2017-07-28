@@ -1,4 +1,4 @@
-package com.example.venetatodorova.news
+package com.example.venetatodorova.news.models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -17,8 +17,7 @@ class Article(var author: String,
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString()) {
-    }
+            parcel.readString())
 
     constructor(json: JsonObject) : this(
             json["author"] as String,

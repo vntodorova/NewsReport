@@ -23,6 +23,12 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="TitleExpandedMedium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="TitleCollapsed" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">40sp</item>
         <item name="android:textColor">@android:color/white</item>

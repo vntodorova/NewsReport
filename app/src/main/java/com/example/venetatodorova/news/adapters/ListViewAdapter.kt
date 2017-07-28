@@ -1,4 +1,4 @@
-package com.example.venetatodorova.news
+package com.example.venetatodorova.news.adapters
 
 import android.content.Context
 import android.graphics.Point
@@ -9,6 +9,9 @@ import android.view.WindowManager
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.venetatodorova.news.R
+import com.example.venetatodorova.news.models.Article
+import com.example.venetatodorova.news.utils.DesignManager
 import com.squareup.picasso.Picasso
 
 class ListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) : BaseAdapter() {

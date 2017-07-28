@@ -1,9 +1,10 @@
-package com.example.venetatodorova.news
+package com.example.venetatodorova.news.services
 
 import android.net.Uri
 import com.beust.klaxon.JsonArray
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
+import com.example.venetatodorova.news.models.Article
 import com.github.kittinunf.fuel.httpGet
 import java.net.URL
 

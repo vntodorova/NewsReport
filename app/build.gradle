@@ -39,6 +39,7 @@ dependencies {
     compile 'com.beust:klaxon:0.30' //JSON parser
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.squareup.picasso:picasso:2.5.2' // Picasso
+    compile 'net.opacapp:multiline-collapsingtoolbar:1.5.0' //Collapsing toolbar
 }
 repositories {
     mavenCentral()
