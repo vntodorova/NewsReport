@@ -2,7 +2,6 @@ package com.example.venetatodorova.news
 
 import android.content.Context
 import android.graphics.Point
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +31,7 @@ class ListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) :
         val currentArticle = itemsList[position]
 
         viewHolder.titleLabel.text = currentArticle.title
-        val type = Typeface.createFromAsset(context.assets, "fonts/Quicksand-Regular.otf")
-        viewHolder.titleLabel.typeface = type
+        DesignManager.setArticleTitleTypeface(viewHolder.titleLabel, context)
 
         Picasso.with(context)
                 .load(currentArticle.urlToImage)

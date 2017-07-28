@@ -9,9 +9,18 @@ import java.net.URL
 
 object APILayer {
 
-    val apiKey = "38664fe26d3b49948b361e0b5075f527"
+    private val apiKey = "38664fe26d3b49948b361e0b5075f527"
 
-    fun buildURL(source: String): URL {
+    fun requestNews(resultHandler: (ArrayList<Article>) -> (Unit)) {
+        buildURL("techcrunch")
+                .toString()
+                .httpGet()
+                .responseString { request, response, result ->
+                    resultHandler(parse(result.get()))
+                }
+    }
+
+    private fun buildURL(source: String): URL {
         val url: URL
         val uriBuilder = Uri.Builder()
         uriBuilder.scheme("https")
@@ -24,17 +33,8 @@ object APILayer {
         return url
     }
 
-    fun requestNews(resultHandler: (ArrayList<Article>) -> (Unit)) {
-        buildURL("techcrunch")
-                .toString()
-                .httpGet()
-                .responseString { request, response, result ->
-                    resultHandler(parse(result.get()))
-                }
-    }
-
     @Suppress("UNCHECKED_CAST")
-    fun parse(jsonString: String): ArrayList<Article> {
+    private fun parse(jsonString: String): ArrayList<Article> {
         val jsonObject = Parser().parse(StringBuilder(jsonString)) as JsonObject
         val articles = jsonObject["articles"] as JsonArray<JsonObject>
         val result = ArrayList<Article>()

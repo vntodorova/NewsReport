@@ -16,13 +16,16 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/toolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorAccent"
             android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/TitleCollapsed"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:expandedTitleTextAppearance="@style/TitleExpanded"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="true">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
