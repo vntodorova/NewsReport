@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/imageView"
-        android:background="#4D00cccc"
+        android:background="#4D008080"
         android:text="Title"
         android:textColor="@android:color/white"
         android:textSize="25sp"/>
