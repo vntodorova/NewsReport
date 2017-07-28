@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var articles: ArrayList<Article> = ArrayList()
-    private val adapter = ListViewAdapter(this, articles)
+    private lateinit var adapter: ListViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,17 +18,21 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         DesignManager.setToolbarTypeface(toolbarLayout, assets)
 
+        adapter = ListViewAdapter(this, articles)
         listView.adapter = adapter
-
-        APILayer.requestNews { result ->
-            articles.clear()
-            articles.addAll(result)
-            adapter.notifyDataSetChanged()
-        }
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Not implemented", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        APILayer.requestNews { result ->
+            articles.clear()
+            articles.addAll(result)
+            adapter.notifyDataSetChanged()
         }
     }
 
