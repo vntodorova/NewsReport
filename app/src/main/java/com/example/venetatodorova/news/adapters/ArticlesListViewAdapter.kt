@@ -14,7 +14,7 @@ import com.example.venetatodorova.news.models.Article
 import com.example.venetatodorova.news.utils.DesignManager
 import com.squareup.picasso.Picasso
 
-class ListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) : BaseAdapter() {
+class ArticlesListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -23,7 +23,7 @@ class ListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) :
 
         val viewHolder: ViewHolder
         if (convertView == null) {
-            view = this.inflater.inflate(R.layout.list_view_row, parent, false)
+            view = this.inflater.inflate(R.layout.row_article, parent, false)
             viewHolder = ViewHolder(view)
             view.tag = viewHolder
         } else {
@@ -34,7 +34,7 @@ class ListViewAdapter(val context: Context, var itemsList: ArrayList<Article>) :
         val currentArticle = itemsList[position]
 
         viewHolder.titleLabel.text = currentArticle.title
-        DesignManager.setArticleTitleTypeface(viewHolder.titleLabel, context)
+        DesignManager.setTypeface(arrayListOf(viewHolder.titleLabel), context.assets)
 
         Picasso.with(context)
                 .load(currentArticle.urlToImage)

@@ -4,4 +4,13 @@
     <string name="title_activity_article_details">ArticleDetailsActivity</string>
     <string name="intent_message">Intent</string>
     <string name="loading_page_message">"Loading page…"</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="top">Top</string>
+    <string name="latest">Latest</string>
+    <string name="popular">Popular</string>
+    <string name="filter_dialog_tag">FilterDialogTag</string>
+    <string name="close">Close</string>
+    <string name="save">Save</string>
+    <string name="choose_sources">Choose sources:</string>
+    <string name="shared_pref_key">SelectedSources</string>
 </resources>
