@@ -12,6 +12,7 @@ import com.example.venetatodorova.news.models.Article
 import com.example.venetatodorova.news.models.Source
 import com.example.venetatodorova.news.services.APILayer
 import com.example.venetatodorova.news.utils.DesignManager
+import com.example.venetatodorova.news.utils.SystemPreferencesHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -28,37 +29,22 @@ class MainActivity : AppCompatActivity(), FilterDialogFragment.FilterDialogListe
 
         adapter = ArticlesListViewAdapter(this, articles)
         listView.adapter = adapter
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val intent = Intent(this, ArticleDetailsActivity::class.java)
-            intent.putExtra(resources.getString(R.string.intent_message), adapter.getItem(position))
-            startActivity(intent)
-        }
 
+        listView.setOnItemClickListener { _, _, position, _ ->
+            onArticleSelected(position)
+        }
         filterButton.setOnClickListener { _ ->
             onFilterButtonPressed()
         }
     }
 
-    private fun onFilterButtonPressed() {
-        val transaction = fragmentManager.beginTransaction()
-        val previous = fragmentManager.findFragmentByTag(getString(R.string.filter_dialog_tag))
-        if (previous != null) {
-            transaction.remove(previous)
-        }
-        transaction.addToBackStack(null)
-
-        val filterDialogFragment = FilterDialogFragment()
-        filterDialogFragment.setListener(this)
-        filterDialogFragment.show(transaction, (getString(R.string.filter_dialog_tag)))
-    }
-
     override fun onResume() {
         super.onResume()
-        APILayer.requestNews { result ->
-            articles.clear()
+        val sources = SystemPreferencesHelper.read(this, resources)
+        APILayer.requestNews(sources.first(), { result ->
             articles.addAll(result)
             adapter.notifyDataSetChanged()
-        }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,5 +64,24 @@ class MainActivity : AppCompatActivity(), FilterDialogFragment.FilterDialogListe
 
     override fun onFilterDialogDismissed(selectedSources: ArrayList<Source>, filter: FilterDialogFragment.Filter) {
         print(selectedSources)
+    }
+
+    private fun onArticleSelected(position: Int) {
+        val intent = Intent(this, ArticleDetailsActivity::class.java)
+        intent.putExtra(resources.getString(R.string.intent_message), adapter.getItem(position))
+        startActivity(intent)
+    }
+
+    private fun onFilterButtonPressed() {
+        val transaction = fragmentManager.beginTransaction()
+        val previous = fragmentManager.findFragmentByTag(getString(R.string.filter_dialog_tag))
+        if (previous != null) {
+            transaction.remove(previous)
+        }
+        transaction.addToBackStack(null)
+
+        val filterDialogFragment = FilterDialogFragment()
+        filterDialogFragment.setListener(this)
+        filterDialogFragment.show(transaction, (getString(R.string.filter_dialog_tag)))
     }
 }

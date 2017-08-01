@@ -41,7 +41,7 @@ class FilterDialogFragment : DialogFragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater?.inflate(R.layout.fragment_filter_dialog, container, false)
-        val backgroundColorId = ContextCompat.getColor(context, R.color.colorAccentTransparent)
+        val backgroundColorId = ContextCompat.getColor(context, R.color.colorAccentTransparentMedium)
         dialog.window.setBackgroundDrawable(ColorDrawable(backgroundColorId))
         return view as View
     }

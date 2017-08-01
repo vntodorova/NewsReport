@@ -13,12 +13,12 @@ object APILayer {
 
     private val apiKey = "38664fe26d3b49948b361e0b5075f527"
 
-    fun requestNews(resultHandler: (ArrayList<Article>) -> (Unit)) {
-        buildArticleURL("techcrunch")
+    fun requestNews(source: String, resultHandler: (ArrayList<Article>) -> (Unit)) {
+        buildArticleURL(source)
                 .toString()
                 .httpGet()
                 .responseString { request, response, result ->
-                    resultHandler(parseArticle(result.get()))
+                    resultHandler(parseArticles(result.get()))
                 }
     }
 
@@ -56,7 +56,7 @@ object APILayer {
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun parseArticle(jsonString: String): ArrayList<Article> {
+    private fun parseArticles(jsonString: String): ArrayList<Article> {
         val jsonObject = Parser().parse(StringBuilder(jsonString)) as JsonObject
         val articles = jsonObject["articles"] as JsonArray<JsonObject>
         val result = ArrayList<Article>()

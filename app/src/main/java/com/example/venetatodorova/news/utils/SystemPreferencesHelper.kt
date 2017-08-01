@@ -15,7 +15,7 @@ object SystemPreferencesHelper {
         editor.apply()
     }
 
-    fun read(activity: Activity, resources: Resources): Set<String>? {
+    fun read(activity: Activity, resources: Resources): Set<String> {
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
         val defaultValue = setOf(
                 "ABC News (AU)",
